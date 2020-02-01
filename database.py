@@ -1,4 +1,5 @@
 import pymysql
+import ip
 
 class Database:
 
@@ -11,7 +12,7 @@ class Database:
     
     def insert(self, log):
         # Executa o comando:
-        self.cursor.execute("INSERT INTO dados (texto) VALUES ('" + log + "')")
+        self.cursor.execute("INSERT INTO dados (ip, user, texto) VALUES ('" + log + "')")
         
         # Efetua um commit no banco de dados.
         # Por padrão, não é efetuado commit automaticamente. Você deve commitar para salvar
@@ -20,3 +21,7 @@ class Database:
         
         # Finaliza a conexão
         self.conexao.close()
+
+    def getIP():
+        _ip = ip.Ip()
+        return _ip.ip(), _ip.user()
