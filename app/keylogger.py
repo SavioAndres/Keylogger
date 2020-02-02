@@ -29,10 +29,9 @@ def time_monitor():
 def send_data():
     db = database.Database()
     if conteudo != "":
-        db.insert(conteudo)
+        db.insert(conteudo, True)
+        #db.insert("", True)
         log("", True)
-    else:
-        db.insert_print()
 
 def monitor(key):
     try:
